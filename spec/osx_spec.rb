@@ -6,6 +6,10 @@ describe Consular::OSX do
     @core = Consular::OSX.new File.expand_path('../fixtures/bar.term', __FILE__)
   end
 
+  it "should return name of core with #to_s" do
+    assert_equal "Consular::OSX Mac OSX Terminal", Consular::OSX.to_s
+  end
+
   it "should have ALLOWED_OPTIONS" do
     options = Consular::OSX::ALLOWED_OPTIONS
 

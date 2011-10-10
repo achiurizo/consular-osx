@@ -18,12 +18,19 @@ module Consular
 
     class << self
 
-      # Checks to see if the current system is on darwin.
-      # TODO: strengthen this system check.
+      # Checks to see if the current system is on darwin and if
+      # $TERM_PROGRAM is set to Apple_Terminal.
       #
       # @api public
       def valid_system?
-        RUBY_PLATFORM.downcase =~ /darwin/
+        (RUBY_PLATFORM.downcase =~ /darwin/) && ENV['TERM_PROGRAM'] == 'Apple_Terminal'
+      end
+
+      # Returns name of Core. used in CLI core selection
+      #
+      # @api public
+      def to_s
+        "Consular::OSX Mac OSX Terminal"
       end
     end
 
