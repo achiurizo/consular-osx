@@ -16,6 +16,17 @@ module Consular
       :tab    => [:settings, :selected]
     } unless defined?(ALLOWED_OPTIONS)
 
+    class << self
+
+      # Checks to see if the current system is on darwin.
+      # TODO: strengthen this system check.
+      #
+      # @api public
+      def valid_system?
+        RUBY_PLATFORM.downcase =~ /darwin/
+      end
+    end
+
 
     # Initializes a reference to the Terminal.app via appscript
     #
@@ -41,7 +52,7 @@ module Consular
     def process!
       windows = @termfile[:windows]
       default = windows.delete('default')
-      run_in_window('default', default, :default => true) unless default[:tabs].empty?
+      execute_window(default, :default => true) unless default[:tabs].empty?
       windows.each_pair { |_, cont| execute_window(cont) }
     end
 
@@ -65,8 +76,8 @@ module Consular
     #     :default - Whether this is being run as the default window.
     #
     # @example
-    #   @core.execute_window 'default', contents, :default => true
-    #   @core.execute_window 'default', contents, :default => true
+    #   @core.execute_window contents, :default => true
+    #   @core.execute_window contents, :default => true
     #
     # @api public
     def execute_window(content, options = {})
@@ -77,18 +88,18 @@ module Consular
       _contents.keys.sort.each do |key|
         _content = _contents[key]
         _options = content[:options]
-        _name    = _options[:name]
+        _name    = options[:name]
 
         _tab =
         if _first_run && !options[:default]
-          open_window _options.merge(window_options)
+          open_window options.merge(window_options)
         else
           key == 'default' ? active_window : open_tab(_options)
         end
 
         _first_run = false
         commands = prepend_befores _content[:commands], _contents[:befores]
-        commands = set_title commands, _name
+        commands = set_title _name, commands
         commands.each { |cmd| execute_command cmd, :in => _tab }
       end
 
@@ -187,7 +198,7 @@ module Consular
     #
     # @api semipublic
     def set_options(options = {})
-      raise NotImplementedError
+      # raise NotImplementedError
     end
 
     # Returns the current terminal process.
