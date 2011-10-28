@@ -7,7 +7,11 @@ Automate your OSX Terminal with Consular
 
 If you haven't already, install Consular:
 
-  gem install consular --pre
+  gem install consular
+
+then install consular-osx:
+
+  gem install consular-osx
 
 
 next, run `init`:
