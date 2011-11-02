@@ -105,7 +105,7 @@ module Consular
         end
 
         _first_run = false
-        commands = prepend_befores _content[:commands], _contents[:befores]
+        commands = prepend_befores _content[:commands], content[:before]
         commands = set_title _name, commands
         commands.each { |cmd| execute_command cmd, :in => _tab }
       end
@@ -139,7 +139,7 @@ module Consular
     # @api public
     def prepend_befores(commands, befores = nil)
       unless befores.nil? || befores.empty?
-        commands.insert(0, befores).flatten! 
+        commands.insert(0, befores).flatten!
       else
         commands
       end
