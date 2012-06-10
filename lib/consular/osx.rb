@@ -235,7 +235,7 @@ module Consular
     def active_window
       windows = @terminal.windows.get
       windows.detect do |window|
-        window.properties_.get[:frontmost] rescue false
+        window.properties_.get[:frontmost] rescue windows.first
       end
     end
 
