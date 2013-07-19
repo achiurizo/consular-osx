@@ -7,16 +7,16 @@ Automate your OSX Terminal with Consular
 
 If you haven't already, install Consular:
 
-  gem install consular
+    $ gem install consular
 
 then install consular-osx:
 
-  gem install consular-osx
+    $ gem install consular-osx
 
 
 next, run `init`:
 
-  consular init
+    $ consular init
 
 This will generate a global directory and also a `.consularc` in your home
 directory. On the top of your `.consularc`, just require this core like
